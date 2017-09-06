@@ -20,7 +20,7 @@ class QseeGui(QMainWindow, Ui_MainWindow):
     class ties gui and reading elements together
     """
     def __init__(self, parent=None):
-        super(qsee_gui, self).__init__()
+        super(QseeGui, self).__init__()
         self.setupUi(self)
 
         #
@@ -55,7 +55,6 @@ class QseeGui(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    form = qsee_gui()
+    form = QseeGui()
     form.show()
     sys.exit(app.exec_())
-    
