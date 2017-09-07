@@ -10,6 +10,7 @@ TODO: better documentation
 """
 
 import random
+import matplotlib
 from PyQt5.QtWidgets import QSizePolicy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 import matplotlib.pyplot as plt
@@ -20,6 +21,7 @@ class PlotCanvas(FigureCanvasQTAgg):
     """
     def __init__(self, parent=None):
         self.fig = plt.figure()
+        self.axes = []
 
         FigureCanvasQTAgg.__init__(self, self.fig)
         self.setParent(parent)
@@ -28,7 +30,7 @@ class PlotCanvas(FigureCanvasQTAgg):
                                         QSizePolicy.Expanding,
                                         QSizePolicy.Expanding)
         FigureCanvasQTAgg.updateGeometry(self)
-        self.plot()
+        self.init_3_yaxis_plot()
 
     def plot(self, x=[], y=[]):
         """
@@ -37,9 +39,44 @@ class PlotCanvas(FigureCanvasQTAgg):
         self.fig.clear()
         if not len(x) or not len(y):
             x = range(25)
-            y = [random.random() for i in range(25)]
+            y = [random.random() for i in x]
         ax = self.figure.add_subplot(111)
         ax.plot(x, y, 'o')
         ax.set_title('PyQt Matplotlib Example')
         ax.grid()
         self.draw()
+
+    def init_3_yaxis_plot(self):
+        """
+        draw stuff on 3 seperate axis
+        :return:
+        """
+        # wipe and start anew
+        self.fig.clear()
+
+        # create 3 axes
+        ax = self.figure.add_subplot(111)
+        self.axes = [ax, ax.twinx(), ax.twinx()]
+
+        temp = 0.75
+        self.figure.subplots_adjust(right=temp)
+        right_additive = (0.98-temp)/float(2)
+
+        # Move the last y-axis spine over to the right by x% of the width of the axes
+        ax = self.axes[2]
+        ax.spines['right'].set_position(('axes', 1. + right_additive))
+        ax.set_frame_on(True)
+        ax.patch.set_visible(False)
+        ax.yaxis.set_major_formatter(matplotlib.ticker.OldScalarFormatter())
+
+        x = range(25)
+        colors = ('Green', 'Red', 'Blue')
+        markers = 'xos'
+        for i, ax in enumerate(self.axes):
+            y = [random.random() for j in x]
+            ax.plot(x, y, marker=markers[i], color=colors[i])
+            ax.set_ylabel("%s item" % colors[i], color=colors[i])
+            ax.tick_params(axis='y', colors=colors[i])
+        self.axes[0].set_xlabel('x axis')
+        self.axes[0].grid()
+        self.axes[0].set_title('3 Axis Plot')
