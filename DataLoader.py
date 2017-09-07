@@ -20,12 +20,13 @@ class DataLoader(object):
         self.dataframe = []
         self.data_fields = ['']
         self.time_key = ''
+        self.time = []
 
     def load_excel(self):
         """
         load an excel file and extract field names
         """
-        self.dataframe = pd.read_excel(self.fname, 'Master')
+        self.dataframe = pd.read_excel(self.fname, 'BW ES QSee')
 
         temp_data_fields = list(self.dataframe)
 
@@ -35,5 +36,16 @@ class DataLoader(object):
         if self.time_key:
             temp_data_fields.remove(self.time_key)
 
+        # get prepare time values
+        if not self.time:
+            self.time = self.dataframe[self.time_key].values
+
         self.data_fields.extend(temp_data_fields)
 
+    def get_data(self, key=''):
+        """
+        get data
+        :return: list of times
+        """
+        values = self.dataframe[key].values
+        return values
