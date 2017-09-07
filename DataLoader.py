@@ -47,5 +47,7 @@ class DataLoader(object):
         get data
         :return: list of times
         """
-        values = self.dataframe[key].values
+        values = []
+        if key in self.data_fields and key:
+            values = self.dataframe[key].values
         return values
