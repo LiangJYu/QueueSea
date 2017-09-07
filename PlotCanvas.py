@@ -19,10 +19,9 @@ class PlotCanvas(FigureCanvasQTAgg):
     where pretty plots go
     """
     def __init__(self, parent=None):
-        fig = plt.figure()#(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+        self.fig = plt.figure()
 
-        FigureCanvasQTAgg.__init__(self, fig)
+        FigureCanvasQTAgg.__init__(self, self.fig)
         self.setParent(parent)
 
         FigureCanvasQTAgg.setSizePolicy(self,
@@ -31,13 +30,16 @@ class PlotCanvas(FigureCanvasQTAgg):
         FigureCanvasQTAgg.updateGeometry(self)
         self.plot()
 
-    def plot(self):
+    def plot(self, x=[], y=[]):
         """
         draw stuff
         """
-        data = [random.random() for i in range(25)]
+        self.fig.clear()
+        if not len(x) or not len(y):
+            x = range(25)
+            y = [random.random() for i in range(25)]
         ax = self.figure.add_subplot(111)
-        ax.plot(data, 'r-')
+        ax.plot(x, y, 'o')
         ax.set_title('PyQt Matplotlib Example')
         ax.grid()
         self.draw()

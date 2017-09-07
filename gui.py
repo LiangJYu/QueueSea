@@ -48,10 +48,13 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         self.data_clear_pushButton.clicked.connect(self.clear_loaded_data)
         self.data_source_lineEdit.textChanged.connect(self.rename_fname)
 
-        # connect plotting buttons
+        # connect plot manipulation buttons
         self.plot_zoom_pushButton.clicked.connect(self.toolbar.zoom)
         self.plot_pan_pushButton.clicked.connect(self.toolbar.pan)
         self.plot_reset_pushButton.clicked.connect(self.toolbar.home)
+
+        # connect
+        self.data_select_comboBox_1.currentIndexChanged.connect(self.combobox_plot)
 
     def file_load_popup(self):
         """
@@ -80,6 +83,20 @@ class QseeGui(QMainWindow, Ui_MainWindow):
             self.data_select_comboBox_1.addItems(fields)
             self.data_select_comboBox_2.addItems(fields)
             self.data_select_comboBox_3.addItems(fields)
+        # debug kludge
+        else:
+            self.data_source_lineEdit.setText('C:/Users/liang/Documents/proj/wpi_demo/2017_07_27 Operating data.xlsx')
+
+    def combobox_plot(self):
+        """
+        plot something something
+        :return:
+        """
+        key = self.data_select_comboBox_1.currentText()
+        if key:
+            t = self.data_loader.time
+            y = self.data_loader.get_data(key)
+            self.plot_canvas.plot(t, y)
 
     def clear_loaded_data(self):
         pass
