@@ -12,27 +12,25 @@ TODO: better documentation
 import random
 from PyQt5.QtWidgets import QSizePolicy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
 class PlotCanvas(FigureCanvasQTAgg):
     """
     where pretty plots go
     """
-    def __init__(self, parent=None, width=4, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
+    def __init__(self, parent=None):
+        fig = plt.figure()#(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
- 
+
         FigureCanvasQTAgg.__init__(self, fig)
         self.setParent(parent)
- 
+
         FigureCanvasQTAgg.setSizePolicy(self,
-                QSizePolicy.Expanding,
-                QSizePolicy.Expanding)
+                                        QSizePolicy.Expanding,
+                                        QSizePolicy.Expanding)
         FigureCanvasQTAgg.updateGeometry(self)
         self.plot()
- 
- 
+
     def plot(self):
         """
         draw stuff

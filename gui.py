@@ -11,6 +11,7 @@ TODO: do better documentation
 
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from window import Ui_MainWindow
 from DataLoader import DataLoader
 from PlotCanvas import PlotCanvas
@@ -22,23 +23,34 @@ class QseeGui(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(QseeGui, self).__init__()
         self.setupUi(self)
-        self.init()
 
-        #
+        # setup plot
+        self.plot_canvas = PlotCanvas(self.plot_widget)
+        self.plot_widget.layout().addWidget(self.plot_canvas)
+        #self.plot_widget.layout.addItems(self.plot_canvas)
+
+        # partially setup plot controls
+        self.toolbar = NavigationToolbar2QT(self.plot_canvas, self)
+        self.toolbar.hide()
+
         self.file_name = ''
         self.data_loader = DataLoader()
+
+        self.init()
 
     def init(self):
         """
         additional init missing from setupUI()
         """
-        # connect buttons
+        # connect data loading buttons
         self.data_select_pushButton.clicked.connect(self.file_load_popup)
         self.data_load_pushButton.clicked.connect(self.load_file)
         self.data_clear_pushButton.clicked.connect(self.clear_loaded_data)
 
-        # setup plot
-        plot_canvas = PlotCanvas(self.plot_widget)
+        # connect plotting buttons
+        self.plot_zoom_pushButton.clicked.connect(self.toolbar.zoom)
+        self.plot_pan_pushButton.clicked.connect(self.toolbar.pan)
+        self.plot_reset_pushButton.clicked.connect(self.toolbar.home)
 
     def file_load_popup(self):
         """
