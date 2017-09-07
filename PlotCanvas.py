@@ -30,7 +30,7 @@ class PlotCanvas(FigureCanvasQTAgg):
                                         QSizePolicy.Expanding,
                                         QSizePolicy.Expanding)
         FigureCanvasQTAgg.updateGeometry(self)
-        self.init_3_yaxis_plot()
+        self.plot_triple_yaxis()
 
     def plot(self, x=[], y=[]):
         """
@@ -46,13 +46,17 @@ class PlotCanvas(FigureCanvasQTAgg):
         ax.grid()
         self.draw()
 
-    def init_3_yaxis_plot(self):
+    def plot_triple_yaxis(self, x=[], y=[]):
         """
         draw stuff on 3 seperate axis
         :return:
         """
         # wipe and start anew
         self.fig.clear()
+
+        if not len(x) or not len(y):
+            x = range(25)
+            y = [[random.random() for i in x] for j in range(3)]
 
         # create 3 axes
         ax = self.figure.add_subplot(111)
@@ -69,14 +73,15 @@ class PlotCanvas(FigureCanvasQTAgg):
         ax.patch.set_visible(False)
         ax.yaxis.set_major_formatter(matplotlib.ticker.OldScalarFormatter())
 
-        x = range(25)
         colors = ('Green', 'Red', 'Blue')
         markers = 'xos'
         for i, ax in enumerate(self.axes):
-            y = [random.random() for j in x]
-            ax.plot(x, y, marker=markers[i], color=colors[i])
-            ax.set_ylabel("%s item" % colors[i], color=colors[i])
-            ax.tick_params(axis='y', colors=colors[i])
+            if len(y[i]) == len(x):
+                ax.plot(x, y[i], marker=markers[i], color=colors[i])
+                ax.set_ylabel("item %d" % i, color=colors[i])
+                ax.tick_params(axis='y', colors=colors[i])
         self.axes[0].set_xlabel('x axis')
         self.axes[0].grid()
         self.axes[0].set_title('3 Axis Plot')
+
+        self.draw()
