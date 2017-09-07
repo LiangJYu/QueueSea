@@ -5,7 +5,6 @@
 QSee functionality replacement
 
 Author: Liang Yu
-Website: zetcode.com
 Last edited: September 2017
 TODO: better documentation
 """
@@ -19,11 +18,22 @@ class DataLoader(object):
     def __init__(self, parent=None, fname=''):
         self.fname = fname
         self.dataframe = []
-        self.data_fields = []
+        self.data_fields = ['']
+        self.time_key = ''
 
     def load_excel(self):
         """
         load an excel file and extract field names
         """
         self.dataframe = pd.read_excel(self.fname, 'Master')
-        self.data_fields = list(self.dataframe)
+
+        temp_data_fields = list(self.dataframe)
+
+        # assume there exists only 1 column for time
+        self.time_key = [x for x in temp_data_fields if 'date' in x.lower() or 'time' in x.lower()]
+        # remove time key from data_fields
+        if self.time_key:
+            temp_data_fields.remove[self.time_key]
+
+        self.data_fields.extend(temp_data_fields)
+

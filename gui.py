@@ -42,10 +42,11 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         """
         additional init missing from setupUI()
         """
-        # connect data loading buttons
+        # connect data loading interface
         self.data_select_pushButton.clicked.connect(self.file_load_popup)
         self.data_load_pushButton.clicked.connect(self.load_file)
         self.data_clear_pushButton.clicked.connect(self.clear_loaded_data)
+        self.data_source_lineEdit.textChanged.connect(self.rename_fname)
 
         # connect plotting buttons
         self.plot_zoom_pushButton.clicked.connect(self.toolbar.zoom)
@@ -60,15 +61,25 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         self.data_loader.fname = self.file_name
         self.data_source_lineEdit.setText(self.file_name)
 
+    def rename_fname(self):
+        """
+        do something when text in lineEdit changes
+        :return:
+        """
+        self.data_loader.fname = self.data_source_lineEdit.text()
+
     def load_file(self):
         """
         load file
         """
-        self.data_loader.load_excel()
-        fields = self.data_loader.data_fields
-        self.data_select_comboBox_1.addItems(fields)
-        self.data_select_comboBox_2.addItems(fields)
-        self.data_select_comboBox_3.addItems(fields)
+        if self.data_source_lineEdit.text():
+            if not self.data_loader.fname:
+                self.data_loader.fname = self.data_source_lineEdit.text()
+            self.data_loader.load_excel()
+            fields = self.data_loader.data_fields
+            self.data_select_comboBox_1.addItems(fields)
+            self.data_select_comboBox_2.addItems(fields)
+            self.data_select_comboBox_3.addItems(fields)
 
     def clear_loaded_data(self):
         pass
