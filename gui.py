@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """
@@ -54,7 +54,9 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         self.plot_reset_pushButton.clicked.connect(self.toolbar.home)
 
         # connect
-        self.data_select_comboBox_1.currentIndexChanged.connect(self.combobox_plot)
+        self.data_select_comboBox_1.currentIndexChanged.connect(self.combobox_triple_plot)
+        self.data_select_comboBox_2.currentIndexChanged.connect(self.combobox_triple_plot)
+        self.data_select_comboBox_3.currentIndexChanged.connect(self.combobox_triple_plot)
 
     def file_load_popup(self):
         """
@@ -87,7 +89,7 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         else:
             self.data_source_lineEdit.setText('C:/Users/liang/Documents/proj/wpi_demo/2017_07_27 Operating data.xlsx')
 
-    def combobox_plot(self):
+    def combobox_single_plot(self):
         """
         plot something something
         :return:
@@ -98,8 +100,31 @@ class QseeGui(QMainWindow, Ui_MainWindow):
             y = self.data_loader.get_data(key)
             self.plot_canvas.plot(t, y)
 
+    def combobox_triple_plot(self):
+        """
+        plot 3 something something
+        :return:
+        """
+        t = self.data_loader.time
+        y = self.get_y_values()
+        self.plot_canvas.plot_triple_yaxis(t, y)
+
+    def get_y_values(self):
+        """
+        get y values using each comboBox's current value
+        :return:
+        3 item list where each item corresponds to value coming from DataLoader
+        """
+        keys = [self.data_select_comboBox_1.currentText(),
+                self.data_select_comboBox_2.currentText(),
+                self.data_select_comboBox_3.currentText()]
+
+        y_values = [self.data_loader.get_data(key) for key in keys]
+        return y_values
+
     def clear_loaded_data(self):
         pass
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
