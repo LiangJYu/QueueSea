@@ -65,7 +65,7 @@ class PlotCanvas(FigureCanvasQTAgg):
             x_label = ''
             title = ''
         else:
-            x_label = 'time'
+            x_label = 'Time'
             title = ' '.join(y_labels) + ' vs Time'
 
         # create 3 axes
@@ -87,7 +87,7 @@ class PlotCanvas(FigureCanvasQTAgg):
         markers = 'xos'
         for i, ax in enumerate(self.axes):
             if len(y[i]) == len(x):
-                ax.plot(x, y[i], marker=markers[i], color=colors[i])
+                ax.plot(x, y[i], marker=markers[i], color=colors[i], lw=0.75, markersize=3)
                 ax.set_ylabel(y_labels[i], color=colors[i])
                 ax.tick_params(axis='y', colors=colors[i])
         self.axes[0].set_xlabel(x_label)
