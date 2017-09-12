@@ -72,6 +72,8 @@ class Ui_MainWindow(object):
         self.data_select_comboBox_3 = QtWidgets.QComboBox(self.centralwidget)
         self.data_select_comboBox_3.setObjectName("data_select_comboBox_3")
         self.control_verticalLayout.addWidget(self.data_select_comboBox_3)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.control_verticalLayout.addItem(spacerItem)
         self.horizontalLayout.addLayout(self.control_verticalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
