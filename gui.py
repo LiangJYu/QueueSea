@@ -46,7 +46,7 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         self.data_select_pushButton.clicked.connect(self.file_load_popup)
         self.data_load_pushButton.clicked.connect(self.load_file)
         self.data_clear_pushButton.clicked.connect(self.clear_loaded_data)
-        self.data_source_lineEdit.textChanged.connect(self.rename_fname)
+        self.data_source_lineEdit.textChanged.connect(self.fname_renamed)
 
         # connect plot manipulation buttons
         self.plot_zoom_pushButton.clicked.connect(self.toolbar.zoom)
@@ -66,7 +66,7 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         self.data_loader.fname = self.file_name
         self.data_source_lineEdit.setText(self.file_name)
 
-    def rename_fname(self):
+    def fname_renamed(self):
         """
         do something when text in lineEdit changes
         :return:
@@ -80,14 +80,14 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         if self.data_source_lineEdit.text():
             if not self.data_loader.fname:
                 self.data_loader.fname = self.data_source_lineEdit.text()
-            self.data_loader.load_excel()
+            self.data_loader.load_excel_baseline()
             fields = self.data_loader.data_fields
             self.data_select_comboBox_1.addItems(fields)
             self.data_select_comboBox_2.addItems(fields)
             self.data_select_comboBox_3.addItems(fields)
         # debug kludge
         else:
-            self.data_source_lineEdit.setText('C:/Users/liang/Documents/proj/wpi_demo/2017_07_27 Operating data.xlsx')
+            self.data_source_lineEdit.setText('C:/Users/liang/Documents/proj/qc_gui/plant_data.xlsx')
 
     def combobox_single_plot(self):
         """
