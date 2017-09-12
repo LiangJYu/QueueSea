@@ -62,6 +62,9 @@ class PlotCanvas(FigureCanvasQTAgg):
             # TODO: random to purty sines
             y = [[random.random() for i in x] for j in range(3)]
             y_labels = ["{}".format(str(i)) for i in range(3)]
+            x_label = ''
+        else:
+            x_label = 'time'
 
         # create 3 axes
         ax = self.figure.add_subplot(111)
@@ -85,7 +88,7 @@ class PlotCanvas(FigureCanvasQTAgg):
                 ax.plot(x, y[i], marker=markers[i], color=colors[i])
                 ax.set_ylabel(y_labels[i], color=colors[i])
                 ax.tick_params(axis='y', colors=colors[i])
-        self.axes[0].set_xlabel('x axis')
+        self.axes[0].set_xlabel(x_label)
         self.axes[0].grid()
         self.axes[0].set_title('3 Axis Plot')
 
