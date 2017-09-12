@@ -63,8 +63,10 @@ class PlotCanvas(FigureCanvasQTAgg):
             y = [[random.random() for i in x] for j in range(3)]
             y_labels = ["{}".format(str(i)) for i in range(3)]
             x_label = ''
+            title = ''
         else:
             x_label = 'time'
+            title = ' '.join(y_labels) + ' vs Time'
 
         # create 3 axes
         ax = self.figure.add_subplot(111)
@@ -90,6 +92,6 @@ class PlotCanvas(FigureCanvasQTAgg):
                 ax.tick_params(axis='y', colors=colors[i])
         self.axes[0].set_xlabel(x_label)
         self.axes[0].grid()
-        self.axes[0].set_title('3 Axis Plot')
+        self.axes[0].set_title(title)
 
         self.draw()
