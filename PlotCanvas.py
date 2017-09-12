@@ -45,9 +45,9 @@ class PlotCanvas(FigureCanvasQTAgg):
         self.fig.clear()
 
         if not len(x) or not len(y):
-            x = range(25)
+            x = np.arange(25)
             # TODO: random to purty sines
-            y = [[random.random() for i in x] for j in range(3)]
+            y = [np.cos(x*(j+1)*np.pi/18.)*(j+1) for j in range(3)]
             y_labels = ["{}".format(str(i)) for i in range(3)]
             x_label = ''
             title = ''
