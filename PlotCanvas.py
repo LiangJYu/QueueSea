@@ -9,10 +9,11 @@ https://sukhbinder.wordpress.com/2013/12/16/simple-pyqt-and-matplotlib-example-w
 
 Author: Liang Yu
 Last edited: September 2017
-TODO: better documentation
+TODO: better documentation, update each plot axis without full redraw?
 """
 
 import random
+import numpy as np
 import matplotlib
 from PyQt5.QtWidgets import QSizePolicy
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
@@ -34,20 +35,6 @@ class PlotCanvas(FigureCanvasQTAgg):
                                         QSizePolicy.Expanding)
         FigureCanvasQTAgg.updateGeometry(self)
         self.plot_triple_yaxis()
-
-    def plot(self, x=[], y=[]):
-        """
-        draw stuff
-        """
-        self.fig.clear()
-        if not len(x) or not len(y):
-            x = range(25)
-            y = [random.random() for i in x]
-        ax = self.figure.add_subplot(111)
-        ax.plot(x, y, 'o')
-        ax.set_title('PyQt Matplotlib Example')
-        ax.grid()
-        self.draw()
 
     def plot_triple_yaxis(self, x=[], y=[], y_labels=[]):
         """
