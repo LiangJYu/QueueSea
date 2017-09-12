@@ -3,6 +3,9 @@
 
 """
 QSee functionality replacement
+Code adapted from:
+https://stackoverflow.com/questions/7733693/matplotlib-overlay-plots-with-different-scales
+https://sukhbinder.wordpress.com/2013/12/16/simple-pyqt-and-matplotlib-example-with-zoompan/
 
 Author: Liang Yu
 Last edited: September 2017
@@ -46,7 +49,7 @@ class PlotCanvas(FigureCanvasQTAgg):
         ax.grid()
         self.draw()
 
-    def plot_triple_yaxis(self, x=[], y=[]):
+    def plot_triple_yaxis(self, x=[], y=[], y_labels=[]):
         """
         draw stuff on 3 seperate axis
         :return:
@@ -56,7 +59,9 @@ class PlotCanvas(FigureCanvasQTAgg):
 
         if not len(x) or not len(y):
             x = range(25)
+            # TODO: random to purty sines
             y = [[random.random() for i in x] for j in range(3)]
+            y_labels = ["{}".format(str(i)) for i in range(3)]
 
         # create 3 axes
         ax = self.figure.add_subplot(111)
@@ -78,7 +83,7 @@ class PlotCanvas(FigureCanvasQTAgg):
         for i, ax in enumerate(self.axes):
             if len(y[i]) == len(x):
                 ax.plot(x, y[i], marker=markers[i], color=colors[i])
-                ax.set_ylabel("item %d" % i, color=colors[i])
+                ax.set_ylabel(y_labels[i], color=colors[i])
                 ax.tick_params(axis='y', colors=colors[i])
         self.axes[0].set_xlabel('x axis')
         self.axes[0].grid()

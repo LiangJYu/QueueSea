@@ -106,8 +106,8 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         :return:
         """
         t = self.data_loader.time
-        y = self.get_y_values()
-        self.plot_canvas.plot_triple_yaxis(t, y)
+        y, labels = self.get_y_values()
+        self.plot_canvas.plot_triple_yaxis(t, y, labels)
 
     def get_y_values(self):
         """
@@ -115,12 +115,13 @@ class QseeGui(QMainWindow, Ui_MainWindow):
         :return:
         3 item list where each item corresponds to value coming from DataLoader
         """
-        keys = [self.data_select_comboBox_1.currentText(),
+        labels = [self.data_select_comboBox_1.currentText(),
                 self.data_select_comboBox_2.currentText(),
                 self.data_select_comboBox_3.currentText()]
 
-        y_values = [self.data_loader.get_data(key) for key in keys]
-        return y_values
+        y_values = [self.data_loader.get_data(key) for key in labels]
+        labels = [label.replace('\n', '') for label in labels]
+        return y_values, labels
 
     def clear_loaded_data(self):
         pass
