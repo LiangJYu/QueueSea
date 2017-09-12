@@ -89,7 +89,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Plant Parameter Plots"))
         self.plot_zoom_pushButton.setText(_translate("MainWindow", "Zoom"))
         self.plot_pan_pushButton.setText(_translate("MainWindow", "Pan"))
         self.plot_reset_pushButton.setText(_translate("MainWindow", "Reset View"))
