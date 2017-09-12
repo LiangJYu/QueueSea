@@ -12,7 +12,6 @@ Last edited: September 2017
 TODO: better documentation, update each plot axis without full redraw?
 """
 
-import random
 import numpy as np
 import matplotlib
 from PyQt5.QtWidgets import QSizePolicy
@@ -46,7 +45,6 @@ class PlotCanvas(FigureCanvasQTAgg):
 
         if not len(x) or not len(y):
             x = np.arange(25)
-            # TODO: random to purty sines
             y = [np.cos(x*(j+1)*np.pi/18.)*(j+1) for j in range(3)]
             y_labels = ["{}".format(str(i)) for i in range(3)]
             x_label = ''
