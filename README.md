@@ -1,4 +1,4 @@
-Demo of offline standalone plotting tool
+Demo of offline standalone plotting tool for replacing LG QC webapp
 
 Read in plant readouts and calculate additional parameters; load everything for plotting.
 
